@@ -1,0 +1,26 @@
+{
+  "name": "flea-market-server-nodejs-mongodb",
+  "version": "1.0.0",
+  "description": "exchange the goods",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/xuankhubui/flea-market-server-nodejs-mongodb.git"
+  },
+  "keywords": [
+    "flea",
+    "market"
+  ],
+  "author": "xuankhubui",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/xuankhubui/flea-market-server-nodejs-mongodb/issues"
+  },
+  "homepage": "https://gitlab.com/xuankhubui/flea-market-server-nodejs-mongodb#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
