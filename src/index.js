@@ -29,6 +29,8 @@ app.use(cookieParser());
 db.connect(`${process.env.DB_URL}`);
 
 app.get("/", (req, res) => {
+  console.log("Cookies: ", req.cookies);
+  console.log("Signed Cookies: ", req.signedCookies);
   return res.send({
     connect: "connect success!"
   })
