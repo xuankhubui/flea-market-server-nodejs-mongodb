@@ -28,7 +28,11 @@ app.use(cookieParser());
 
 db.connect(`${process.env.DB_URL}`);
 
-
+app.get("/", (req, res) => {
+  return res.send({
+    connect: "connect success!"
+  })
+})
 
 app.listen(process.env.PORT,`${process.env.HOST}`, () => {
     console.log(`Server is running on ${process.env.PORT}`);
