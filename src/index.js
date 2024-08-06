@@ -21,6 +21,15 @@ const bcrypt = require('bcrypt');
 const router = require('./routers');
 dotenv.config();
 
-app.listen(8080,"127.0.0.1", () => {
-    console.log(`Server is running on port`);
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use(cookieParser());
+
+db.connect(`${process.env.DB_URL}`);
+
+
+
+app.listen(process.env.PORT,`${process.env.HOST}`, () => {
+    console.log(`Server is running on ${process.env.PORT}`);
 } )
