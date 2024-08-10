@@ -28,6 +28,7 @@ const initialAdmin = async () => {
   try {
     //check role
     let roles = await db.roles.find();
+    let users = await db.users.find();
     if (!Array.isArray(roles) || roles.length == 0) {
       //create admin
       /*  const admin = await db.roles.insertOne({
@@ -40,6 +41,46 @@ const initialAdmin = async () => {
       }
       await db.roles.create(admin);
       console.log("Admin created");
+
+      let adminRole = await db.roles.findOne({ code: { $in: [process.env.ADMIN] } });
+
+      //security
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash("123456", salt);
+
+      //create admin user
+      const user = {
+        username: 'admin',
+        password: hashedPassword,
+        email: 'admin.kent@gmail.com',
+        firstName: 'admin',
+        lastName: 'admin',
+        role: adminRole._id,
+      };
+      await db.users.create(user);
+    } else {
+      if (!Array.isArray(users) || users.length == 0) {
+        let adminRole = await db.roles.findOne({ code: { $in: [process.env.ADMIN] } });
+
+        //security
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash("123456", salt);
+
+        //create admin user
+        const user = {
+          username: 'admin',
+          password: hashedPassword,
+          email: 'admin.kent@gmail.com',
+          firstName: 'admin',
+          lastName: 'admin',
+          role: adminRole._id,
+        };
+        await db.users.create(user);
+      } else {
+        console.log(`${users.length} user found`);
+      }
+      console.log(`${roles.length} role found`);
+      console.log(`${users.length} user found`);
     }
   } catch (error) {
     console.log(error);
