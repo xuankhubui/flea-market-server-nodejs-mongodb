@@ -23,7 +23,7 @@ dotenv.config();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 db.connect(`${process.env.DB_URL}`);
@@ -36,6 +36,6 @@ app.get("/", (req, res) => {
   })
 })
 
-app.listen(process.env.PORT,`${process.env.HOST}`, () => {
-    console.log(`Server is running on ${process.env.PORT}`);
-} )
+app.listen(process.env.PORT, `${process.env.HOST}`, () => {
+  console.log(`Server is running on ${process.env.PORT}`);
+})
