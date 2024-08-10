@@ -2,19 +2,6 @@ const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
 const cors = require('cors');
-// CROS middleware 
-/*
-app.use(function(req, res, next) {
-    // Mọi domain
-    res.header("Access-Control-Allow-Origin", "*");
-   
-    // Domain nhất định
-    // res.header("Access-Control-Allow-Origin", "https://freetuts.net");
-   
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
-*/
 const cookieParser = require('cookie-parser');
 const db = require('./models');
 const bcrypt = require('bcrypt');
@@ -35,6 +22,33 @@ app.get("/", (req, res) => {
     connect: "connect success!"
   })
 })
+
+//initial document admin in collection roles and document admin in collection users
+const initialAdmin = async () => {
+  try {
+    //check role
+    let roles = await db.roles.find();
+    if (!Array.isArray(roles) || roles.length == 0) {
+      //create admin
+      /*  const admin = await db.roles.insertOne({
+         name: "admin",
+         code: process.env.ADMIN
+       }); */
+      const admin = {
+        name: "admin",
+        code: process.env.ADMIN
+      }
+      await db.roles.create(admin);
+      console.log("Admin created");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+initialAdmin();
+
+router(express);
 
 app.listen(process.env.PORT, `${process.env.HOST}`, () => {
   console.log(`Server is running on ${process.env.PORT}`);
