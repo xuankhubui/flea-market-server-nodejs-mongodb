@@ -29,7 +29,9 @@ const initialAdmin = async () => {
     //check role
     let roles = await db.roles.find();
     let users = await db.users.find();
-    if (!Array.isArray(roles) || roles.length == 0) {
+    let findAdminRole = await db.roles.findOne({ code: { $in: [process.env.ADMIN] } });
+    let findAdminUser = await db.users.findOne({ role: { $in: [findAdminRole] } })
+    if (!Array.isArray(roles) || roles.length == 0 || findAdminRole == null) {
       //create admin
       /*  const admin = await db.roles.insertOne({
          name: "admin",
@@ -59,7 +61,7 @@ const initialAdmin = async () => {
       };
       await db.users.create(user);
     } else {
-      if (!Array.isArray(users) || users.length == 0) {
+      if (!Array.isArray(users) || users.length == 0 || findAdminUser == null) {
         let adminRole = await db.roles.findOne({ code: { $in: [process.env.ADMIN] } });
 
         //security
