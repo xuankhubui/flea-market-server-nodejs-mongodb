@@ -21,8 +21,25 @@ module.exports = {
     async register(req, res) {
         let body = req.body;
 
-        if (body.password !== body.confirmPassword) {
-            return res.status(401).send({ message: 'Password do not match' });
+        if (!body.username.match(usernameValidation)) {
+            return res.status(400).send({message: 'The username is valid'});
         }
+        delete body.username
+        if (body.password !== body.confirmPassword) {
+            return res.status(400).send({ message: 'Password do not match' });
+        }
+        delete body.confirmPassword;
+        //the password hash and the password is encrypted then saved database 
+        const saltRounds = await bcrypt.genSalt(10);
+        const passwordHashed = await bcrypt.hash(body.password, saltRounds);
+        try {
+            const userExist = await MODEL.users.findOne({ email: body.email} || {username: body.username});
+            if (userExist) {
+                return res.status
+            }
+        } catch (error) {
+            
+        }
+
     }
 }
